@@ -4,7 +4,6 @@ import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.lemonzuo.elasticsearch.model.User;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
@@ -23,20 +22,15 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
-import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.elasticsearch.core.query.HighlightQuery;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -52,6 +46,7 @@ public class ElasticSearchDocApi {
 
     /**
      * 创建文档
+     *
      * @throws IOException
      */
     @GetMapping("createDoc")
@@ -74,6 +69,7 @@ public class ElasticSearchDocApi {
 
     /**
      * 文档是否存在
+     *
      * @throws IOException
      */
     @GetMapping("docIsExists")
@@ -90,6 +86,7 @@ public class ElasticSearchDocApi {
 
     /**
      * 获取文档信息
+     *
      * @throws IOException
      */
     @GetMapping("getDoc")
@@ -102,6 +99,7 @@ public class ElasticSearchDocApi {
 
     /**
      * 更新文档
+     *
      * @throws IOException
      */
     @GetMapping("updateDoc")
@@ -118,6 +116,7 @@ public class ElasticSearchDocApi {
 
     /**
      * 删除文档
+     *
      * @throws IOException
      */
     @GetMapping("deleteDoc")
@@ -129,6 +128,7 @@ public class ElasticSearchDocApi {
 
     /**
      * 批量插入文档
+     *
      * @throws IOException
      */
     @GetMapping("batchAddDoc")
@@ -161,8 +161,8 @@ public class ElasticSearchDocApi {
         searchSourceBuilder.query(query);
         searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
         // 分页
-         searchSourceBuilder.from();
-         searchSourceBuilder.size();
+        searchSourceBuilder.from();
+        searchSourceBuilder.size();
 
         searchRequest.source(searchSourceBuilder);
         SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
