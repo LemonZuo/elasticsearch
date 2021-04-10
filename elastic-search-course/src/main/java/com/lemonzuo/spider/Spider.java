@@ -14,7 +14,6 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.rest.RestStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -39,8 +38,8 @@ import java.util.List;
  * @create 2021-04-08 20:42
  */
 @Slf4j
-@RestController
 public class Spider {
+    RestHighLevelClient client = SpringUtil.getBean("restHighLevelClient", RestHighLevelClient.class);
     /**
      * 解析网页
      *
@@ -67,7 +66,6 @@ public class Spider {
     }
 
     public void saveToEs(List<Course> courseList) throws IOException {
-        RestHighLevelClient client = SpringUtil.getBean("restHighLevelClient", RestHighLevelClient.class);
         // 判断索引是否存在
         String index = "db_course";
         GetIndexRequest getIndexRequest = new GetIndexRequest(index);
@@ -156,7 +154,6 @@ public class Spider {
         }
     }
 
-    @GetMapping("start")
     public void main() throws IOException {
         int end = 32;
         String baseUrl = "https://www.lanqiao.cn/courses/?page=";
