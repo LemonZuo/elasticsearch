@@ -1,6 +1,6 @@
 package com.lemonzuo.controller;
 
-import com.lemonzuo.spider.Spider;
+import com.lemonzuo.spider.ShiYanLouSpider;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -35,7 +35,7 @@ public class CourseController {
 
     @GetMapping("start")
     public String start() throws IOException {
-        Spider spider = new Spider();
+        ShiYanLouSpider spider = new ShiYanLouSpider();
         spider.main();
         return "SUCCESS";
     }

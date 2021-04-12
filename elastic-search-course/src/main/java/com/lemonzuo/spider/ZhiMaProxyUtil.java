@@ -21,7 +21,7 @@ import java.util.Map;
 @RestController
 public class ZhiMaProxyUtil {
     private static final String API_URL = "http://webapi.http.zhimacangku.com/getip";
-    private static final String FREE = "141888";
+    // private static final String FREE = "141888";
     private static final String DAY = "141999";
     private static final String MONTH = "142002";
     private static Map<String, Object> param = new HashMap<>(15);
@@ -49,13 +49,10 @@ public class ZhiMaProxyUtil {
         int setMeal = RandomUtil.randomInt(1, 3);
         switch (setMeal) {
             case 1:
-                param.put("pack", FREE);
+                param.put("pack", MONTH);
                 break;
             case 2:
                 param.put("pack", DAY);
-                break;
-            case 3:
-                param.put("pack", MONTH);
                 break;
             default:
                 param.put("pack", MONTH);

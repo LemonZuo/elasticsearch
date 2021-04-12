@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
  * @create 2021-04-08 20:42
  */
 @Slf4j
-public class Spider {
+public class ShiYanLouSpider {
     RestHighLevelClient client = SpringUtil.getBean("restHighLevelClient", RestHighLevelClient.class);
 
     /**
