@@ -30,6 +30,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author LemonZuo
@@ -38,6 +40,7 @@ import java.util.List;
 @Slf4j
 public class Spider {
     RestHighLevelClient client = SpringUtil.getBean("restHighLevelClient", RestHighLevelClient.class);
+
     /**
      * 解析网页
      *
@@ -55,6 +58,13 @@ public class Spider {
             String courseName = element.getElementsByClass("course-name").eq(0).text();
             String courseDescription = element.getElementsByClass("course-description").eq(0).text();
             String studentsCount = element.getElementsByClass("students-count").eq(0).text();
+            String patternStr = "[1-9]\\d*";
+
+            Pattern pattern = Pattern.compile(patternStr);
+            Matcher matcher = pattern.matcher(studentsCount);
+            if (matcher.find()) {
+                studentsCount = matcher.group();
+            }
             Course course = new Course(imgUrl, courseName, courseDescription, studentsCount);
             courseList.add(course);
         });

@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 public class CourseController {
     @Resource(name = "restHighLevelClient")
     private RestHighLevelClient client;
+
     @GetMapping("start")
     public String start() throws IOException {
         Spider spider = new Spider();
@@ -41,14 +42,16 @@ public class CourseController {
 
     /**
      * 非高亮分页查询
+     *
      * @param keywords 检索关键字
-     * @param pageNo 当前页号
+     * @param pageNo   当前页号
      * @param pageSize 每页数据条数
      * @return
      * @throws IOException
      */
     @GetMapping("searchPage/{keywords}/{pageNo}/{pageSize}")
-    public List<Map<String, Object>> searchPage(@PathVariable String keywords, @PathVariable int pageNo, @PathVariable int pageSize) throws IOException {
+    public List<Map<String, Object>> searchPage(@PathVariable String keywords, @PathVariable int pageNo,
+                                                @PathVariable int pageSize) throws IOException {
         List<Map<String, Object>> list = new ArrayList();
         String index = "db_course";
         // 搜索请求
@@ -61,7 +64,7 @@ public class CourseController {
                 .query(termQuery)
                 .timeout(new TimeValue(60, TimeUnit.SECONDS))
                 // 分页配置
-                .from(pageNo <=1?1:pageNo * pageSize)
+                .from(pageNo <= 1 ? 1 : (pageNo * pageSize) + 1)
                 .size(pageSize);
         // 搜索请求配置搜索构建器
         searchRequest.source(searchSourceBuilder);
@@ -77,8 +80,9 @@ public class CourseController {
 
     /**
      * 高亮分页查询
+     *
      * @param keywords 检索关键字
-     * @param pageNo 当前页号
+     * @param pageNo   当前页号
      * @param pageSize 每页数据条数
      * @return
      * @throws IOException
@@ -103,7 +107,7 @@ public class CourseController {
                 .highlighter(highlightBuilder)
                 .timeout(new TimeValue(60, TimeUnit.SECONDS))
                 // 分页配置
-                .from(pageNo <=1?1:pageNo * pageSize)
+                .from(pageNo <= 1 ? 1 : (pageNo * pageSize) + 1)
                 .size(pageSize);
         // 搜索请求配置搜索构建器
         searchRequest.source(searchSourceBuilder);
@@ -117,7 +121,7 @@ public class CourseController {
             Map<String, HighlightField> highlightFields = hit.getHighlightFields();
             // 取出高亮字段
             HighlightField courseName = highlightFields.get("courseName");
-            if(courseName != null) {
+            if (courseName != null) {
                 String tempCourseName = "";
                 for (Text fragment : courseName.fragments()) {
                     tempCourseName += fragment;
