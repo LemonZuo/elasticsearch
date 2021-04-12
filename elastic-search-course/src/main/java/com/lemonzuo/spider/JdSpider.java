@@ -126,11 +126,6 @@ public class JdSpider {
         }
     }
 
-//    @GetMapping("getZhiMaProxy")
-//    public void getZhiMaProxy() throws InterruptedException, IOException {
-//        JdSpider jdSpider = new JdSpider();
-//        jdSpider.jdSpider();
-//    }
 
     public String getUserAgent(int id) {
         try {
